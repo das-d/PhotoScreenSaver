@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,10 +17,11 @@ namespace ScreenSaver
         /// 
 
         private static string _picturePath = "";
+        private static string[] _picturePaths;
         private static FolderBrowserDialog _folderBrowserDialog;
 
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -57,6 +59,10 @@ namespace ScreenSaver
                 else if (firstArgument == "/s")      // Full-screen mode
                 {
                     LoadSettings();
+                    if (!String.IsNullOrEmpty(_picturePath))
+                    {
+                        FetchPicturePaths();
+                    }
                     ShowScreenSaver();
                     Application.Run();
                 }
@@ -72,15 +78,13 @@ namespace ScreenSaver
                 MessageBox.Show("No args found");
                 // TODO
             }
-
-            //Application.Run(new ScreenSaverForm());
         }
 
-        static void ShowScreenSaver()
+        private static void ShowScreenSaver()
         {
             foreach (Screen screen in Screen.AllScreens)
             {
-                ScreenSaverForm screensaver = new ScreenSaverForm(screen.Bounds);
+                ScreenSaverForm screensaver = new ScreenSaverForm(screen.Bounds, _picturePaths);
                 screensaver.Show();
             }
         }
@@ -103,6 +107,11 @@ namespace ScreenSaver
                 MessageBox.Show("Couln't read RegKey");
                 throw;
             }
+        }
+
+        private static void FetchPicturePaths()
+        {
+            _picturePaths = Directory.GetFiles(_picturePath, "*.*", SearchOption.AllDirectories);
         }
     }
 }

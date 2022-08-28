@@ -34,23 +34,22 @@ namespace ScreenSaver
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.textLabel = new System.Windows.Forms.Label();
             this.moveTimer = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // textLabel
-            // 
-            this.textLabel.AutoSize = true;
-            this.textLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.textLabel.Location = new System.Drawing.Point(419, 255);
-            this.textLabel.Name = "textLabel";
-            this.textLabel.Size = new System.Drawing.Size(35, 13);
-            this.textLabel.TabIndex = 0;
-            this.textLabel.Text = "label1";
             // 
             // moveTimer
             // 
             this.moveTimer.Tick += new System.EventHandler(this.moveTimer_Tick);
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.Location = new System.Drawing.Point(205, 106);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(194, 131);
+            this.pictureBox.TabIndex = 1;
+            this.pictureBox.TabStop = false;
             // 
             // ScreenSaverForm
             // 
@@ -59,7 +58,7 @@ namespace ScreenSaver
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
-            this.Controls.Add(this.textLabel);
+            this.Controls.Add(this.pictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -70,8 +69,8 @@ namespace ScreenSaver
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ScreenSaverForm_KeyPress);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseClick);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseMove);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -99,9 +98,8 @@ namespace ScreenSaver
         }
 
         #endregion
-
-        private System.Windows.Forms.Label textLabel;
         private Timer moveTimer;
+        private PictureBox pictureBox;
     }
 }
 
