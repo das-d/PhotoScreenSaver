@@ -7,7 +7,7 @@
     <ProjectGuid>{C45EB945-EBDF-4E16-BC3E-6AB14FA0EBB7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ScreenSaver</RootNamespace>
-    <AssemblyName>ScreenSaver</AssemblyName>
+    <AssemblyName>Photo2ScreenSaver.scr</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
