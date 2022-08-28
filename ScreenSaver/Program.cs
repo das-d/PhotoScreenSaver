@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace ScreenSaver
 
         private static string _picturePath = "";
         private static string[] _picturePaths;
+        private static List<Bitmap> _pictures = new List<Bitmap>();
         private static FolderBrowserDialog _folderBrowserDialog;
 
         [STAThread]
@@ -64,6 +66,7 @@ namespace ScreenSaver
                     if (!String.IsNullOrEmpty(_picturePath))
                     {
                         FetchPicturePaths();
+                        CreateBitmaps();
                     }
                     ShowScreenSaver();
                     Application.Run();
@@ -86,7 +89,7 @@ namespace ScreenSaver
         {
             foreach (Screen screen in Screen.AllScreens)
             {
-                ScreenSaverForm screensaver = new ScreenSaverForm(screen.Bounds, _picturePaths);
+                ScreenSaverForm screensaver = new ScreenSaverForm(screen.Bounds, _pictures);
                 screensaver.Show();
             }
         }
@@ -114,6 +117,15 @@ namespace ScreenSaver
         private static void FetchPicturePaths()
         {
             _picturePaths = Directory.GetFiles(_picturePath, "*.*", SearchOption.AllDirectories);
+        }
+
+        private static void CreateBitmaps()
+        {
+            foreach (string path in _picturePaths)
+            {
+                Bitmap bitmap = new Bitmap(path);
+                _pictures.Add(bitmap);
+            }
         }
     }
 }

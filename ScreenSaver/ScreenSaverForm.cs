@@ -20,16 +20,14 @@ namespace ScreenSaver
         private Color BORDER_COLOR = Color.DarkGray;
         private const double BACKGROUND_OPACITY = 0.20;
 
-        private Bitmap _image = null;
+        private List<Bitmap> _pictures;
+        private Bitmap _darkPicture;
 
-
-        private string[] _pictures;
-
-        public ScreenSaverForm(Rectangle Bounds, string[] picturePaths)
+        public ScreenSaverForm(Rectangle Bounds, List<Bitmap> pictures)
         {
             InitializeComponent();
             this.Bounds = Bounds;
-            this._pictures = picturePaths;
+            this._pictures = pictures;
 
             DisplayRandomImage();
         }
@@ -49,49 +47,41 @@ namespace ScreenSaver
             DisplayRandomImage();
         }
 
-        private Image SetImageOpacity(Image image, double opacity)
+        private void SetImageOpacity(Image image, double opacity)
         {
-            Bitmap bmp = new Bitmap(image.Width, image.Height);
+            _darkPicture = new Bitmap(image.Width, image.Height);
 
-            using (Graphics g = Graphics.FromImage(bmp))
+            using (Graphics g = Graphics.FromImage(_darkPicture))
             {
                 ColorMatrix matrix = new ColorMatrix();
                 matrix.Matrix33 = (float)opacity;
                 ImageAttributes attributes = new ImageAttributes();
                 attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-                g.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+                g.DrawImage(image, new Rectangle(0, 0, _darkPicture.Width, _darkPicture.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+                g.Dispose();
             }
-            return bmp;
         }
 
         private void DisplayRandomImage()
         {
-            if (_pictures.Length == 0) return;
+            if (_pictures.Count == 0) return;
 
             Random rng = new Random();
 
-            int pictureRng = rng.Next(0, _pictures.Length);
-
-            try
-            {
-                if(_image != null) _image.Dispose();
-                _image = new Bitmap(_pictures[pictureRng]);
-            }
-            catch (Exception)
-            {
-                Logger.log("Ex image create");
-                return;
-            }
+            int pictureRng = rng.Next(0, _pictures.Count);
             
-            int imageWidth = _image.Width;
-            int imageHeight = _image.Height;
+            int imageWidth = _pictures.ElementAt(pictureRng).Width;
+            int imageHeight = _pictures.ElementAt(pictureRng).Height;
             double imageAspectRatio = (double)imageWidth / (double)imageHeight;
 
             int screenCenterX = Bounds.Width / 2;
             int screenCenterY = Bounds.Height / 2;
 
-            //this.BackgroundImage = SetImageOpacity(image, BACKGROUND_OPACITY);
-            this.BackgroundImage = _image;
+            if (_darkPicture != null) _darkPicture.Dispose();
+
+            SetImageOpacity(_pictures.ElementAt(pictureRng), BACKGROUND_OPACITY);
+            this.BackgroundImage = _darkPicture;
+            //this.BackgroundImage = _pictures.ElementAt(pictureRng);
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
             int pictureboxHeight = (int)(Bounds.Height * SCREEN_COVERAGE);
@@ -103,7 +93,7 @@ namespace ScreenSaver
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
             pictureBox.ClientSize = new Size(pictureboxWidth, pictureboxHeight);
-            pictureBox.Image = (Image)_image;
+            pictureBox.Image = (Image)_pictures.ElementAt(pictureRng);
 
             pictureBox.Padding = new Padding(BORDER_THICKNESS);
             pictureBox.BackColor = BORDER_COLOR;
