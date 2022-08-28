@@ -64,6 +64,8 @@ namespace ScreenSaver
 
         private void DisplayRandomImage()
         {
+            if (_pictures.Length == 0) return;
+
             Random rng = new Random();
 
             int pictureRng = rng.Next(0, _pictures.Length - 1);
