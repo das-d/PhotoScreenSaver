@@ -67,10 +67,19 @@ namespace ScreenSaver
             if (_pictures.Length == 0) return;
 
             Random rng = new Random();
+            Bitmap image;
 
             int pictureRng = rng.Next(0, _pictures.Length - 1);
 
-            Bitmap image = new Bitmap(_pictures[pictureRng]);
+            try
+            {
+                image = new Bitmap(_pictures[pictureRng]);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            
             int imageWidth = image.Width;
             int imageHeight = image.Height;
             double imageAspectRatio = (double)imageWidth / (double)imageHeight;
