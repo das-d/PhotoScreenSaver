@@ -81,8 +81,11 @@ namespace ScreenSaver
             if (!mouseLocation.IsEmpty)
             {
                 // Terminate if mouse is moved a significant distance
-                if (Math.Abs(mouseLocation.X - e.X) > 1 || Math.Abs(mouseLocation.Y - e.Y) > 1)
+                if (Math.Abs(mouseLocation.X - e.X) > 3 || Math.Abs(mouseLocation.Y - e.Y) > 3)
+                {
+                    Logger.log("Exited through mouse movement");
                     Application.Exit();
+                }    
             }
 
             // Update current mouse location
@@ -91,11 +94,13 @@ namespace ScreenSaver
 
         private void ScreenSaverForm_MouseClick(object sender, MouseEventArgs e)
         {
+            Logger.log("Exited through mouse click");
             Application.Exit();
         }
 
         private void ScreenSaverForm_KeyPress(object sender, KeyPressEventArgs e)
         {
+            Logger.log("Exited through key press");
             Application.Exit();
         }
 

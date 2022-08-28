@@ -20,6 +20,8 @@ namespace ScreenSaver
         private Color BORDER_COLOR = Color.DarkGray;
         private const double BACKGROUND_OPACITY = 0.20;
 
+        private Bitmap _image = null;
+
 
         private string[] _pictures;
 
@@ -67,27 +69,29 @@ namespace ScreenSaver
             if (_pictures.Length == 0) return;
 
             Random rng = new Random();
-            Bitmap image;
 
-            int pictureRng = rng.Next(0, _pictures.Length - 1);
+            int pictureRng = rng.Next(0, _pictures.Length);
 
             try
             {
-                image = new Bitmap(_pictures[pictureRng]);
+                if(_image != null) _image.Dispose();
+                _image = new Bitmap(_pictures[pictureRng]);
             }
             catch (Exception)
             {
+                Logger.log("Ex image create");
                 return;
             }
             
-            int imageWidth = image.Width;
-            int imageHeight = image.Height;
+            int imageWidth = _image.Width;
+            int imageHeight = _image.Height;
             double imageAspectRatio = (double)imageWidth / (double)imageHeight;
 
             int screenCenterX = Bounds.Width / 2;
             int screenCenterY = Bounds.Height / 2;
 
-            this.BackgroundImage = SetImageOpacity(image, BACKGROUND_OPACITY);
+            //this.BackgroundImage = SetImageOpacity(image, BACKGROUND_OPACITY);
+            this.BackgroundImage = _image;
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
             int pictureboxHeight = (int)(Bounds.Height * SCREEN_COVERAGE);
@@ -99,10 +103,11 @@ namespace ScreenSaver
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
             pictureBox.ClientSize = new Size(pictureboxWidth, pictureboxHeight);
-            pictureBox.Image = (Image)image;
+            pictureBox.Image = (Image)_image;
 
             pictureBox.Padding = new Padding(BORDER_THICKNESS);
             pictureBox.BackColor = BORDER_COLOR;
+            Logger.log($"Display image {pictureRng}");
         }
     }
 }

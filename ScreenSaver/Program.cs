@@ -26,6 +26,8 @@ namespace ScreenSaver
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Logger.log("--- Starting ScreenSaver ---");
+
             if (args.Length > 0)
             {
                 string firstArgument = args[0].ToLower().Trim();
