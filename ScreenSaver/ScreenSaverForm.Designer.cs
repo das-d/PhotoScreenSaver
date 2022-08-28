@@ -50,6 +50,8 @@ namespace ScreenSaver
             this.pictureBox.Size = new System.Drawing.Size(194, 131);
             this.pictureBox.TabIndex = 1;
             this.pictureBox.TabStop = false;
+            this.pictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseClick);
+            this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseMove);
             // 
             // ScreenSaverForm
             // 
