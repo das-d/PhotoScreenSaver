@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ScreenSaver
 {
@@ -11,6 +13,11 @@ namespace ScreenSaver
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
+        /// 
+
+        private static string _picturePath = "";
+        private static FolderBrowserDialog _folderBrowserDialog;
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -34,7 +41,14 @@ namespace ScreenSaver
 
                 if (firstArgument == "/c")           // Configuration mode
                 {
-                    // TODO
+                    _folderBrowserDialog = new FolderBrowserDialog();
+                    _folderBrowserDialog.Description = "Select dir with pictures to show";
+                    DialogResult result = _folderBrowserDialog.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        _picturePath = _folderBrowserDialog.SelectedPath;
+                        SaveSettingsToRegistry();
+                    }
                 }
                 else if (firstArgument == "/p")      // Preview mode
                 {
@@ -42,6 +56,7 @@ namespace ScreenSaver
                 }
                 else if (firstArgument == "/s")      // Full-screen mode
                 {
+                    LoadSettings();
                     ShowScreenSaver();
                     Application.Run();
                 }
@@ -67,6 +82,26 @@ namespace ScreenSaver
             {
                 ScreenSaverForm screensaver = new ScreenSaverForm(screen.Bounds);
                 screensaver.Show();
+            }
+        }
+
+        private static void SaveSettingsToRegistry()
+        {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\PictureScreenSaver");
+            key.SetValue("picturePath", _picturePath);
+        }
+
+        private static void LoadSettings()
+        {
+            try
+            {
+                RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\PictureScreenSaver");
+                _picturePath = (string)key.GetValue("picturePath");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Couln't read RegKey");
+                throw;
             }
         }
     }
