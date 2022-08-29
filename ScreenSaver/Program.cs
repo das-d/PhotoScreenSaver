@@ -68,8 +68,12 @@ namespace ScreenSaver
                         FetchPicturePaths();
                         CreateBitmaps();
                     }
-                    ShowScreenSaver();
-                    Application.Run();
+
+                    if(_pictures.Count > 0)
+                    {
+                        ShowScreenSaver();
+                        Application.Run();
+                    }
                 }
                 else    // Undefined argument
                 {

@@ -14,10 +14,10 @@ namespace ScreenSaver
             string path = "E:\\PhotoScreenSaver.log";
             string preparedMessage = $@"{DateTime.Now} - {message}";
 
-            //using (StreamWriter sw = File.AppendText(path))
-            //{
-            //    sw.WriteLine(preparedMessage);
-            //}
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine(preparedMessage);
+            }
         }
     }
 }

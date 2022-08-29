@@ -81,9 +81,13 @@ namespace ScreenSaver
             if (!mouseLocation.IsEmpty)
             {
                 // Terminate if mouse is moved a significant distance
-                if (Math.Abs(mouseLocation.X - e.X) > 3 || Math.Abs(mouseLocation.Y - e.Y) > 3)
+
+                double mouseMovementX = Math.Abs(mouseLocation.X - e.X);
+                double mouseMovementY = Math.Abs(mouseLocation.Y - e.Y);
+
+                if (Math.Abs(mouseLocation.X - e.X) > 10 || Math.Abs(mouseLocation.Y - e.Y) > 10)
                 {
-                    Logger.log("Exited through mouse movement");
+                    Logger.log($"Exited through mouse movement. xMove: {mouseMovementX} yMove: {mouseMovementY}");
                     Application.Exit();
                 }    
             }

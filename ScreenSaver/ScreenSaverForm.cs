@@ -97,7 +97,7 @@ namespace ScreenSaver
 
             pictureBox.Padding = new Padding(BORDER_THICKNESS);
             pictureBox.BackColor = BORDER_COLOR;
-            Logger.log($"Display image {pictureRng}");
+            //Logger.log($"Display image {pictureRng}");
         }
     }
 }
