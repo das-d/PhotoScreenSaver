@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="PhotoScreenSaver.ShowPictureControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PhotoScreenSaver"
+             mc:Ignorable="d" 
+             d:DesignHeight="1080" 
+             d:DesignWidth="1920" 
+             Background="Black" 
+             >
+    <Grid>
+        <Border BorderBrush="#00000000">
+            <Image x:Name="backgroundImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="LowQuality"/>
+            <Border.Effect>
+                <BlurEffect x:Name="blurEffect" KernelType="Gaussian"/>
+            </Border.Effect>
+        </Border>
+
+        <Grid x:Name="imageCanvas">
+            <Border x:Name="foregroundImageBorder" BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image x:Name="foregroundImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="0" BlurRadius="50"/>
+                </Border.Effect>
+            </Border>
+            <TextBlock 
+                x:Name="infoText" 
+                Text="Text" 
+                Opacity="0.15"
+                Foreground="#FFFFFF" 
+                FontSize="65" 
+                FontWeight="ExtraLight" 
+                FontFamily="Bahnschrift Light Condensed" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Bottom"
+                Margin="0,0,0,-10">
+                <TextBlock.Effect>
+                    <DropShadowEffect
+                          ShadowDepth="2"
+                          Direction="315"
+                          Color="Black"
+                          BlurRadius="2"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </Grid>
+    </Grid>
+</UserControl>

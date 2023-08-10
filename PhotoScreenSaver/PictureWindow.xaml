@@ -1,0 +1,41 @@
+﻿<Window x:Class="PhotoScreenSaver.PictureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PhotoScreenSaver"
+        mc:Ignorable="d"
+        Title="PictureWindow" 
+        Height="1080" 
+        Width="1920" 
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Background="Black" 
+        ResizeMode="NoResize" 
+        ShowInTaskbar="False" 
+        AllowsTransparency="True"
+        WindowStyle="None" 
+        MouseMove="Window_MouseMove" 
+        Loaded="Window_Loaded" 
+        KeyDown="Window_KeyDown" 
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid>
+        <local:ShowPictureControl 
+            x:Name="ImageEvenControl"
+            Opacity="1"
+            Info="{Binding Info, UpdateSourceTrigger=PropertyChanged}"
+            Image="{Binding ImageEven, UpdateSourceTrigger=PropertyChanged}" 
+            BackgroundOpacity="{Binding BackgroundOpacity, UpdateSourceTrigger=PropertyChanged}" 
+            ScreenCoverage="{Binding ScreenCoverage, UpdateSourceTrigger=PropertyChanged}" 
+            BorderSize="{Binding BorderSize, UpdateSourceTrigger=PropertyChanged}"
+            BackgroundBlurRadius="{Binding BlurRadius, UpdateSourceTrigger=PropertyChanged}"/>
+        <local:ShowPictureControl 
+            x:Name="ImageOddControl"
+            Opacity="1"
+            Info="{Binding Info, UpdateSourceTrigger=PropertyChanged}"
+            Image="{Binding ImageOdd, UpdateSourceTrigger=PropertyChanged}" 
+            BackgroundOpacity="{Binding BackgroundOpacity, UpdateSourceTrigger=PropertyChanged}" 
+            ScreenCoverage="{Binding ScreenCoverage, UpdateSourceTrigger=PropertyChanged}" 
+            BorderSize="{Binding BorderSize, UpdateSourceTrigger=PropertyChanged}"
+            BackgroundBlurRadius="{Binding BlurRadius, UpdateSourceTrigger=PropertyChanged}"/>
+    </Grid>
+</Window>
